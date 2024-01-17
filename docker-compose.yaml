@@ -15,7 +15,7 @@ services:
       - payeasy_db
 
   payeasy_db:
-    container_name: scribe_db
+    container_name: payeasy_db
     image: mongo:latest
     env_file:
       - /docker.env      
@@ -29,7 +29,7 @@ services:
     ports:
       - "27019:8081"
     depends_on:
-      - scribe_db
+      - payeasy_db
     env_file:
      - /docker.env
 
