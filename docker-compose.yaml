@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+  payeasy_api:
+    container_name: "payeasy_api"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    hostname: "payeasy"
+    ports:
+      - "4000:4000"
+    env_file:
+      - /docker.env
+    depends_on:
+      - payeasy_db
+
+  payeasy_db:
+    container_name: scribe_db
+    image: mongo:latest
+    env_file:
+      - /docker.env      
+    ports:
+      - "27018:27017"
+    volumes:
+    - mongodb_data:/data/db
+    
+  payeasy_db_visualizer:
+    image: mongo-express
+    ports:
+      - "27019:8081"
+    depends_on:
+      - scribe_db
+    env_file:
+     - /docker.env
+
+volumes:
+  nginx_data:
+  mongodb_data:
