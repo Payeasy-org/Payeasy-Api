@@ -61,5 +61,5 @@ authRouter
             .handle(),
     )
 
-    .post('/logout', logout.handle);
+    .get('/logout', logout.handle);
 

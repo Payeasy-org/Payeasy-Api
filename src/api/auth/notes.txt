@@ -1,4 +1,0 @@
-Review the Otp Service and make sure that all the checks are being passed
-Test the Google Auth and make sure it works
-
-Create the Postman Collection for the Auth Service
