@@ -1,5 +1,5 @@
 import { cache } from '@/app/app-cache';
-import { config, HttpStatus, UnAuthorizedError } from '@/core';
+import { config, HttpStatus, logger, UnAuthorizedError } from '@/core';
 import type { NextFunction, Request, Response } from 'express';
 import { authUtil } from '../../utils';
 
@@ -10,17 +10,22 @@ export class Logout {
         const accessToken = req.header('Authorization')?.split(' ')[1];
 
         if (!accessToken) {
-            throw new UnAuthorizedError('Unauthorized: No access token provided');
+            return next(new UnAuthorizedError('Unauthorized: No access token provided'));
         }
 
         const data = await authUtil._extractTokenDetails(accessToken, config.auth.accessTokenSecret);
 
         if (!data) {
-            throw new UnAuthorizedError('Unauthorized: Invalid token data');
+            return next(new UnAuthorizedError('Unauthorized: Invalid token data'));
         }
 
         await authUtil._blacklistToken(accessToken);
-        await cache.remove(`${data?.id}_REFRESH_TOKEN`);
+
+        try {
+            await cache.remove(`${data?.id}_REFRESH_TOKEN`);
+        } catch (error) {
+            logger.info(`key - ${`${data?.id}_REFRESH_TOKEN`} doesn't exist in cache`);
+        }
 
         req.logout(function (err) {
             if (err) {

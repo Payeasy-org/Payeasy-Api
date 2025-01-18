@@ -24,7 +24,7 @@ class ResetPassword {
             });
             if (!authUser)
                 throw new core_1.BadRequestError('Invalid User');
-            const otpValid = this.otp_service.isOtpValid(authUser.id, Number(otp));
+            const otpValid = await this.otp_service.isOtpValid(authUser.id, Number(otp));
             if (!otpValid)
                 throw new core_1.BadRequestError('Invalid OTP');
             const hashPassword = await (0, core_1.hashData)(password);

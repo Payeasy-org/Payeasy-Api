@@ -79,7 +79,7 @@ const forgotPasswordSchema = {
     inputSchema: Joi.object().keys({
         platform: Joi.string().required().valid('email', 'phone'),
 
-        emailAddress: Joi.alternatives().conditional('medium', {
+        emailAddress: Joi.alternatives().conditional('platform', {
             is: 'email',
             then: Joi.string()
                 .required()
@@ -87,7 +87,7 @@ const forgotPasswordSchema = {
             otherwise: Joi.optional(),
         }),
 
-        phoneNumber: Joi.alternatives().conditional('medium', {
+        phoneNumber: Joi.alternatives().conditional('platform', {
             is: 'phone',
             then: Joi.string()
                 .required()
@@ -103,7 +103,7 @@ const resetPasswordSchema = {
         otp: Joi.string().length(6).required(),
         password: Joi.string().required(),
 
-        emailAddress: Joi.alternatives().conditional('medium', {
+        emailAddress: Joi.alternatives().conditional('platform', {
             is: 'email',
             then: Joi.string()
                 .required()
@@ -111,7 +111,7 @@ const resetPasswordSchema = {
             otherwise: Joi.optional(),
         }),
 
-        phoneNumber: Joi.alternatives().conditional('medium', {
+        phoneNumber: Joi.alternatives().conditional('platform', {
             is: 'phone',
             then: Joi.string()
                 .required()

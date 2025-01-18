@@ -27,7 +27,7 @@ class ResetPassword {
 
         if (!authUser) throw new BadRequestError('Invalid User');
 
-        const otpValid = this.otp_service.isOtpValid(authUser.id, Number(otp));
+        const otpValid = await this.otp_service.isOtpValid(authUser.id, Number(otp));
 
         if (!otpValid) throw new BadRequestError('Invalid OTP');
 

@@ -74,14 +74,14 @@ exports.verifyAccountValidateSchema = verifyAccountValidateSchema;
 const forgotPasswordSchema = {
     inputSchema: joi_1.default.object().keys({
         platform: joi_1.default.string().required().valid('email', 'phone'),
-        emailAddress: joi_1.default.alternatives().conditional('medium', {
+        emailAddress: joi_1.default.alternatives().conditional('platform', {
             is: 'email',
             then: joi_1.default.string()
                 .required()
                 .email({ tlds: { allow: false } }),
             otherwise: joi_1.default.optional(),
         }),
-        phoneNumber: joi_1.default.alternatives().conditional('medium', {
+        phoneNumber: joi_1.default.alternatives().conditional('platform', {
             is: 'phone',
             then: joi_1.default.string()
                 .required()
@@ -96,14 +96,14 @@ const resetPasswordSchema = {
         platform: joi_1.default.string().required().valid('email', 'phone'),
         otp: joi_1.default.string().length(6).required(),
         password: joi_1.default.string().required(),
-        emailAddress: joi_1.default.alternatives().conditional('medium', {
+        emailAddress: joi_1.default.alternatives().conditional('platform', {
             is: 'email',
             then: joi_1.default.string()
                 .required()
                 .email({ tlds: { allow: false } }),
             otherwise: joi_1.default.optional(),
         }),
-        phoneNumber: joi_1.default.alternatives().conditional('medium', {
+        phoneNumber: joi_1.default.alternatives().conditional('platform', {
             is: 'phone',
             then: joi_1.default.string()
                 .required()

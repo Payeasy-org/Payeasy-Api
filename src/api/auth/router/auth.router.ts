@@ -61,5 +61,14 @@ authRouter
             .handle(),
     )
 
+    // .get(
+    //     '/refresh-token',
+    //     ControlBuilder.builder()
+    //         .isPrivate()
+    //         .setHandler(refreshToken.handle)
+    //         .setValidator(refreshTokenSchema)
+    //         .handle(),
+    // )
+
     .get('/logout', logout.handle);
 

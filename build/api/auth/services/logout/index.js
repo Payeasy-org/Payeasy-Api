@@ -9,14 +9,19 @@ class Logout {
         this.handle = async (req, res, next) => {
             const accessToken = req.header('Authorization')?.split(' ')[1];
             if (!accessToken) {
-                throw new core_1.UnAuthorizedError('Unauthorized: No access token provided');
+                return next(new core_1.UnAuthorizedError('Unauthorized: No access token provided'));
             }
             const data = await utils_1.authUtil._extractTokenDetails(accessToken, core_1.config.auth.accessTokenSecret);
             if (!data) {
-                throw new core_1.UnAuthorizedError('Unauthorized: Invalid token data');
+                return next(new core_1.UnAuthorizedError('Unauthorized: Invalid token data'));
             }
             await utils_1.authUtil._blacklistToken(accessToken);
-            await app_cache_1.cache.remove(`${data?.id}_REFRESH_TOKEN`);
+            try {
+                await app_cache_1.cache.remove(`${data?.id}_REFRESH_TOKEN`);
+            }
+            catch (error) {
+                core_1.logger.info(`key - ${`${data?.id}_REFRESH_TOKEN`} doesn't exist in cache`);
+            }
             req.logout(function (err) {
                 if (err) {
                     return next(err);

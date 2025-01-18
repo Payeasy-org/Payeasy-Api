@@ -28,4 +28,12 @@ exports.authRouter
     .setHandler(services_1.refreshToken.handle)
     .setValidator(schema_1.refreshTokenSchema)
     .handle())
-    .post('/logout', services_1.logout.handle);
+    // .get(
+    //     '/refresh-token',
+    //     ControlBuilder.builder()
+    //         .isPrivate()
+    //         .setHandler(refreshToken.handle)
+    //         .setValidator(refreshTokenSchema)
+    //         .handle(),
+    // )
+    .get('/logout', services_1.logout.handle);
