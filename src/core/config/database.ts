@@ -1,16 +1,22 @@
-import mongoose from "mongoose";
-import config from "./config";
-import { logger } from "../logging";
+import * as pg from 'pg';
+import { Sequelize } from 'sequelize';
+import { config } from './config';
 
-// database connection.
-const initializeDbConnection = async () => {
-  return mongoose
-    .connect(config.db.mongodb.MONGO_URL)
-    .then(() => logger.info("Database connection established."))
-    .catch((error) => {
-      console.log("error occured");
-      throw new Error(error);
-    });
-};
+const { dbHost, dbName, dbPassword, dbType, dbUser } = config.db;
 
-export { initializeDbConnection, mongoose };
+export const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
+    host: dbHost,
+    dialect: dbType,
+    dialectModule: pg,
+    omitNull: false,
+    logging: false,
+    pool: {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000,
+    },
+    sync: { alter: { drop: true } },
+    dialectOptions: { ssl: { require: true } },
+    ssl: true,
+});

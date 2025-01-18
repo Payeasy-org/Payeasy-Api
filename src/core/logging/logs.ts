@@ -1,27 +1,31 @@
-import { join } from "path";
-import { createLogger, transports, format } from "winston";
+import { createLogger, transports, format } from 'winston';
 const { combine, printf, timestamp, colorize } = format;
 
 function logFormat() {
-  return printf((info) => {
-    return `${info.timestamp} ${info.level}: ${info.stack || info.message}`;
-  });
+    return printf((info) => {
+        return `${info.timestamp} ${info.level}: ${info.stack || info.message}`;
+    });
 }
 
 export function prodDevLogger() {
-  return createLogger({
-    format: combine(colorize(), timestamp(), logFormat()),
-    transports: [
-      new transports.File({
-        filename: join(__dirname, "appLogs/app.log"),
-      }),
-    ],
-  });
+    return createLogger({
+        format: combine(colorize(), timestamp(), logFormat()),
+        transports: [
+            new transports.File({
+                level: 'info',
+                filename: 'src/appLogs/greenhurb-info.log',
+            }),
+            new transports.File({
+                level: 'error',
+                filename: 'src/appLogs/greenhurb-error.log',
+            }),
+        ],
+    });
 }
 
 export function buildDevLogger() {
-  return createLogger({
-    format: combine(colorize(), timestamp(), logFormat()),
-    transports: [new transports.Console()],
-  });
+    return createLogger({
+        format: combine(colorize(), timestamp(), logFormat()),
+        transports: [new transports.Console()],
+    });
 }

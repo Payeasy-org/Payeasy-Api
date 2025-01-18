@@ -1,21 +1,18 @@
-export type ErrorDetailsDescriptor = Array<{
-  message: string;
-  path: String;
-}> | null;
+export type ErrorDetailsDescriptor = Array<{ message: string; path: string }> | null;
 
-export abstract class ApplicationError extends Error {
-  abstract _statusCode: number;
-  abstract _message: string;
-  abstract _details: ErrorDetailsDescriptor;
+export abstract class ApiError extends Error {
+    abstract _statusCode: number;
+    abstract _message: string;
+    abstract _details: ErrorDetailsDescriptor;
 
-  constructor(message: string) {
-    super(message);
-    this.name = this.constructor.name;
+    constructor(message: string) {
+        super(message);
+        this.name = this.constructor.name;
 
-    Object.setPrototypeOf(this, ApplicationError.prototype);
-  }
+        Object.setPrototypeOf(this, ApiError.prototype);
+    }
 
-  abstract get statusCode(): number;
-  abstract override get message(): string;
-  abstract get details(): ErrorDetailsDescriptor;
+    abstract get statusCode(): number;
+    abstract override get message(): string;
+    abstract get details(): ErrorDetailsDescriptor;
 }

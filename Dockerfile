@@ -1,13 +1,14 @@
-FROM node:18
+FROM node:20-alpine
+ 
+WORKDIR /app
 
-WORKDIR /build
-
-COPY package*.json ./
-RUN npm install typescript
-RUN npm install
+COPY package.json .
 
 COPY . .
 
-EXPOSE 4000/tcp
+RUN npm install
 
-CMD [ "npm","run", "start:dev" ]
+EXPOSE 8000
+ 
+CMD ["npm","run", "start:prod"]
+

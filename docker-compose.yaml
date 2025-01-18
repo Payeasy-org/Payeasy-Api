@@ -1,38 +1,47 @@
-version: "3"
-
+version: '3.8'
 services:
-  payeasy_api:
-    container_name: "payeasy_api"
-    build:
-      context: .
-      dockerfile: Dockerfile
-    hostname: "payeasy"
-    ports:
-      - "4000:4000"
-    env_file:
-      - /docker.env
-    depends_on:
-      - payeasy_db
+    app:
+        build: ./
+        restart: unless-stopped
+        env_file: ./.env
+        ports:
+            - $PORT:$PORT
+        stdin_open: true
+        tty: true
+        volumes:
+            - .:/app
+            - /app/node_modules
+        depends_on:
+            - payeasy_db
+        links:
+            - payeasy_cache:payeasy_cache
 
-  payeasy_db:
-    container_name: payeasy_db
-    image: mongo:latest
-    env_file:
-      - /docker.env      
-    ports:
-      - "27018:27017"
-    volumes:
-    - mongodb_data:/data/db
-    
-  payeasy_db_visualizer:
-    image: mongo-express
-    ports:
-      - "27019:8081"
-    depends_on:
-      - payeasy_db
-    env_file:
-     - /docker.env
+    payeasy_db:
+        image: postgres
+        restart: always
+        container_name: payeasy_db
+        ports:
+            - '5431:5432'
+        environment:
+            PGDATA: /var/lib/postgresql/data/pgdata
+            POSTGRES_USER: admin
+            POSTGRES_PASSWORD: adminpassword
+            POSTGRES_DB: payeasy_db
 
-volumes:
-  nginx_data:
-  mongodb_data:
+    adminer:
+        image: adminer
+        container_name: adminer
+        restart: always
+        ports:
+            - "8080:8080"  
+
+    payeasy_cache:
+        image: 'redis:alpine'
+        container_name: payeasy_cache
+        ports:
+            - '6379:6379'
+
+networks:
+    default:
+        name: payeasy
+        external: false

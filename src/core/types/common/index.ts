@@ -1,4 +1,3 @@
-export * from "./anyFunction";
-export * from "./interfaces";
-export * from "./expressCbFunction";
-export * from "./eventTypes";
+export * from './common.interface';
+export * from './events.interface';
+export * from './files.interface';
