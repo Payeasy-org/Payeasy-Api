@@ -21,7 +21,8 @@
         "prettier:fix": "prettier --ignore-path .prettierignore --write \"**/*.+(js|ts|json)\"",
         "lint-prettier:check": "npm run lint:check && npm run prettier:check",
         "lint-prettier:fix": "npm run lint:fix && npm run prettier:fix",
-        "prepare": "husky install"
+        "prepare": "husky install",
+        "test": "jest --testRegex \".*\\.test\\.ts$\""
     },
     "dependencies": {
         "axios": "^1.6.2",
