@@ -27,6 +27,7 @@ const envSchema = Joi.object()
         DATABASE_USER: Joi.string().required(),
         DATABASE_PASSWORD: Joi.string().allow('').required(),
         DATABASE_TYPE: Joi.string().required(),
+        DATABASE_USE_SSL: Joi.boolean().required(),
 
         REDIS_HOST: Joi.string().required(),
         REDIS_PORT: Joi.string().required(),
@@ -83,6 +84,7 @@ export const config = Object.freeze({
         dbHost: validatedEnvVars.DATABASE_HOST,
         dbName: validatedEnvVars.DATABASE_NAME,
         dbType: validatedEnvVars.DATABASE_TYPE as Dialect,
+        dbUseSsl: Boolean(validatedEnvVars.DATABASE_USE_SSL),
     },
 
     cache: {

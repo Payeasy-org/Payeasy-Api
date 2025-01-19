@@ -13,8 +13,7 @@ services:
             - /app/node_modules
         depends_on:
             - payeasy_db
-        links:
-            - payeasy_cache:payeasy_cache
+            - payeasy_cache
 
     payeasy_db:
         image: postgres
