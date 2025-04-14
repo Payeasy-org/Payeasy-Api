@@ -1,7 +1,7 @@
 import { appRouter } from '@/app';
 import { corsOptions, errorHandler, notFoundHandler } from '@/core';
 import { API_SUFFIX } from '@/core/common';
-import { passport } from '@auth/services/passport';
+import { passport } from '@user/services/passport';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';

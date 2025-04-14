@@ -1,7 +1,7 @@
-import { RefreshTokenPayload } from '@/api/auth/interfaces';
-import { authUtil } from '@/api/auth/utils';
+import { authUtil } from '@user/utils';
 import { cache } from '@/app/app-cache';
 import { BadRequestError, config, ControllerArgs, HttpStatus, UnAuthorizedError } from '@/core';
+import { RefreshTokenPayload } from '@user/interfaces';
 
 class RefreshToken {
     constructor() {}

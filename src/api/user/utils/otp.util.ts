@@ -1,13 +1,7 @@
-import { OTP } from '../models';
-
-type SaveOTPInDB = {
-    userId: string;
-    receivingMedium: 'EMAIL' | 'SMS';
-    isStoreUser?: boolean;
-};
+import { UserCode } from '../models/userCode.model';
 
 export class OTPService {
-    constructor(private readonly dbOtp: typeof OTP) {}
+    constructor(private readonly dbUserCode: typeof UserCode) {}
 
     createOtp(): number {
         const digits = '123456789';
@@ -35,28 +29,26 @@ export class OTPService {
     }
 
     async isOtpValid(userId: string, otp: number): Promise<boolean> {
-        const otpData = await this.dbOtp.findOne({ where: { userId } });
+        const otpData = await this.dbUserCode.findOne({ where: { userId } });
 
-        if (!otpData || otp != otpData.otp) return false;
+        if (!otpData || otp != otpData.code) return false;
 
-        if (this.isOTPExpired(otpData.otpExp)) return false;
+        if (this.isOTPExpired(otpData.expiresAt)) return false;
 
         return true;
     }
 
-    async storeOTPInDb(data: SaveOTPInDB): Promise<number> {
-        const { userId, receivingMedium, isStoreUser = false } = data;
-
+    async storeOTPInDb(userId: string): Promise<number> {
         const otp = this.createOtp();
 
         const otpExp = this.createOTPExp();
 
-        const otpData = await this.dbOtp.findOne({ where: { userId } });
+        const otpData = await this.dbUserCode.findOne({ where: { userId } });
 
         if (otpData) {
-            await this.dbOtp.update({ otp, otpExp }, { where: { userId } });
+            await this.dbUserCode.update({ code: otp, expiresAt: otpExp }, { where: { userId } });
         } else {
-            await this.dbOtp.create({ otp, otpExp, userId, receivingMedium, userType: isStoreUser ? 'STORE_USER' : 'USER' });
+            await this.dbUserCode.create({ code: otp, expiresAt: otpExp, userId });
         }
 
         return otp;

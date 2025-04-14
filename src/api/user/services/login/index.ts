@@ -1,15 +1,14 @@
-import { LoginPayload } from '@/api/auth/interfaces';
-import { authUtil } from '@/api/auth/utils';
-import { StoreUser } from '@/api/store/store-user.model';
-import { User } from '@/api/user/models';
 import { cache } from '@/app/app-cache';
 import { BadRequestError, compareHashedData, config, ControllerArgs, HttpStatus, ITokenSignedPayload, logger } from '@/core';
+import { LoginPayload } from '@user/interfaces';
 import { Request } from 'express';
+import { User } from '@user/models';
+import { authUtil } from '@user/utils';
 
 export class Login {
-    constructor(private readonly dbUser: typeof User, private readonly dbStoreUser: typeof StoreUser) {}
+    constructor(private readonly dbUser: typeof User) {}
 
-    handle = async (payload: ControllerArgs<LoginPayload>, type: 'user' | 'store_user') => {
+    handle = async (payload: ControllerArgs<LoginPayload>) => {
         const { input, request } = payload;
 
         if (!input) throw new BadRequestError(`Invalid login credentials`);
@@ -18,30 +17,16 @@ export class Login {
 
         const normalizedEmail = emailAddress.toLowerCase();
 
-        let user: User | StoreUser | null = null;
+        let user: User | null = null;
 
-        if (type === 'user') {
-            const existingUser = await this.dbUser.findOne({
-                where: {
-                    emailAddress: normalizedEmail,
-                    provider: 'local',
-                },
-            });
+        const existingUser = await this.dbUser.findOne({
+            where: {
+                emailAddress: normalizedEmail,
+                provider: 'local',
+            },
+        });
 
-            if (existingUser) user = existingUser;
-        }
-
-        // Add store ID here
-        if (type === 'store_user') {
-            const existingUser = await this.dbStoreUser.findOne({
-                where: {
-                    emailAddress: normalizedEmail,
-                    
-                },
-            });
-
-            if (existingUser) user = existingUser;
-        }
+        if (existingUser) user = existingUser;
 
         if (!user || user.isSoftDeleted()) throw new BadRequestError('Invalid login credentials');
 
@@ -69,14 +54,13 @@ export class Login {
 
         logger.info('Logged In Successfully');
 
-
         return {
             code: HttpStatus.OK,
             message: 'Logged in Successfully',
             data: {
                 user: {
-                    ...user.toJSON(), 
-                    password: undefined, 
+                    ...user.toJSON(),
+                    password: undefined,
                 },
                 tokens: {
                     accessToken,
@@ -105,6 +89,6 @@ export class Login {
     };
 }
 
-const loginInstance = new Login(User, StoreUser);
+const loginInstance = new Login(User);
 
 export default loginInstance;

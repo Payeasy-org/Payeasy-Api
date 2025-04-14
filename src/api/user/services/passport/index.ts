@@ -1,5 +1,5 @@
-import { authUtil } from '@/api/auth/utils';
-import { User } from '@/api/user/models';
+import { authUtil } from '@user/utils';
+import { User } from '@user/models';
 import { config, logger, sequelize, UnAuthorizedError } from '@/core';
 import { API_SUFFIX } from '@/core/common';
 import type { Express, Request } from 'express';

@@ -1,6 +1,5 @@
 import { sequelize } from '@/core';
 import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model, UUIDV4 } from 'sequelize';
-import { Role } from './role.model';
 
 export class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
     declare id: CreationOptional<string>;
@@ -10,8 +9,6 @@ export class User extends Model<InferAttributes<User>, InferCreationAttributes<U
     declare password: string | null;
     declare providerId: CreationOptional<string>;
     declare provider: string;
-    declare phoneNumber: CreationOptional<string>;
-    declare phoneNumberVerified: CreationOptional<boolean>;
 }
 
 User.init(
@@ -49,17 +46,6 @@ User.init(
             type: DataTypes.STRING,
             allowNull: true,
         },
-        phoneNumber: {
-            type: DataTypes.STRING,
-            allowNull: true,
-            unique: true,
-        },
-
-        phoneNumberVerified: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false,
-            allowNull: false,
-        },
     },
     {
         modelName: 'user',
@@ -68,20 +54,5 @@ User.init(
         timestamps: true,
         freezeTableName: true,
         paranoid: true,
-     
     },
 );
-
-// import { Auth, Role } from "@/api/auth";
-// import { User } from "@/api/user/models";
-
-User.belongsTo(Role, {
-    foreignKey: 'roleId',
-    as: 'role',
-});
-
-// // Auth.belongsTo(User, { foreignKey: 'userId' })
-
-Role.hasMany(User, {
-    foreignKey: 'roleId',
-});

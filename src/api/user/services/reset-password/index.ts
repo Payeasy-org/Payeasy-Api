@@ -1,9 +1,8 @@
-import { ResetPasswordPayload } from '@/api/auth/interfaces';
-import { OTPService } from '@/api/auth/utils';
-import { User } from '@/api/user';
 import { BadRequestError, ControllerArgs, hashData, HttpStatus, logger } from '@/core';
+import { ResetPasswordPayload } from '@user/interfaces';
+import { User, UserCode } from '@user/models';
+import { OTPService } from '@user/utils';
 import { Op } from 'sequelize';
-import { OTP } from '../../models';
 
 class ResetPassword {
     constructor(private readonly dbUser: typeof User, private readonly otp_service: OTPService) {}
@@ -33,7 +32,7 @@ class ResetPassword {
 
         const hashPassword = await hashData(password);
 
-        await this.dbUser.update({ password: hashPassword }, { where: { [Op.or]: orConditions} });
+        await this.dbUser.update({ password: hashPassword }, { where: { [Op.or]: orConditions } });
 
         logger.info('Password Changed Successfully');
 
@@ -44,5 +43,5 @@ class ResetPassword {
     };
 }
 
-const resetPasswordInstance = new ResetPassword(User, new OTPService(OTP));
+const resetPasswordInstance = new ResetPassword(User, new OTPService(UserCode));
 export default resetPasswordInstance;

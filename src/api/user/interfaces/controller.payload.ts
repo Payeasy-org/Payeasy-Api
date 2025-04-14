@@ -1,57 +1,35 @@
 import type { ControllerArgsTypes } from '@/core';
-import { FarmPayload } from './module.types';
-import { AuthPlatform } from '@/api/auth/interfaces';
 
-export interface CreateFarmPayload extends ControllerArgsTypes {
-    input: FarmPayload;
-}
-
-export interface CreateMultipleFarmPayload extends ControllerArgsTypes {
+export interface LoginPayload extends ControllerArgsTypes {
     input: {
-        farm: FarmPayload[];
+        emailAddress: string;
+        password: string;
     };
 }
 
-export interface FindFarmByIdPayload extends ControllerArgsTypes {
-    params: {
-        id: string;
-    };
-}
-
-export interface UpdateFarmPayload extends ControllerArgsTypes {
-    input: Partial<FarmPayload>;
-
-    query: {
-        id: string;
-    };
-}
-
-export interface DeleteFarmPayload extends ControllerArgsTypes {
-    query: {
-        id: string;
-    };
-}
-
-export interface ExtensionAgentSignupPayload extends ControllerArgsTypes {
+export interface SignupPayload extends ControllerArgsTypes {
     input: {
         fullName: string;
         emailAddress: string;
-        phoneNumber: string;
+        phoneNumber?: string;
+        password: string;
     };
 }
 
-export interface ApproveExtensionAgentPayload extends ControllerArgsTypes {
-    params: {
-        id: string;
+export interface ForgotPasswordPayload extends ControllerArgsTypes {
+    input: { emailAddress: string };
+}
+
+export interface ResetPasswordPayload extends ControllerArgsTypes {
+    input: {
+        emailAddress: string;
+        code: string;
+        password: string;
     };
 }
 
-export interface VerifyIdentityPayload extends ControllerArgsTypes {
-    input: AuthPlatform & {
-        otp: string;
+export interface RefreshTokenPayload extends ControllerArgsTypes {
+    input: {
+        refreshToken: string;
     };
-}
-
-export interface ResendVerifyIdentityEmailPayload extends ControllerArgsTypes {
-    input: AuthPlatform;
 }

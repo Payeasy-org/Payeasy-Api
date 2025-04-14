@@ -44,8 +44,6 @@ const envSchema = Joi.object()
         TWILIO_AUTH_TOKEN: Joi.string().required(),
         TWILIO_PHONE_NUMBER: Joi.number().required(),
 
-        DEFAULT_EXTENSION_AGENT_PASSWORD: Joi.string().required(),
-
         PAYSTACK_SECRET_KEY: Joi.string().required(),
 
         FRONTEND_LIVE_ORIGIN: Joi.string().required(),
@@ -117,7 +115,5 @@ export const config = Object.freeze({
         secretKey: validatedEnvVars.PAYSTACK_SECRET_KEY,
     },
 
-    passwords: {
-        extensionAgent: validatedEnvVars.DEFAULT_EXTENSION_AGENT_PASSWORD,
-    },
+
 });

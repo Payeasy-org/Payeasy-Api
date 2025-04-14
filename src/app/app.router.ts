@@ -1,13 +1,10 @@
+import { userRouter } from '@/api/user';
 import { HttpStatus } from '@/core';
 import { Router } from 'express';
-import { authRouter } from '@/api/auth/router/auth.router';
-import { userRouter } from '@/api/user';
 
 export const appRouter = Router();
 
 // appRouter.use("/webhook", webhookRouter)
-
-appRouter.use('/auth', authRouter); // DONE
 
 // appRouter.use("/product", productRouter)
 

@@ -302,3 +302,5 @@ export const eventRegistrationMail = (data: EventInvitationMail) => `
 
 </html>
 `;
+
+

@@ -1,7 +1,7 @@
-import { SignupPayload } from '@/api/auth/interfaces';
-import { User } from '@/api/user/models';
 import { BadRequestError, ConflictError, ControllerArgs, hashData, HttpStatus, logger } from '@/core';
 import { AppMessages } from '@/core/common';
+import { SignupPayload } from '@user/interfaces';
+import { User } from '@user/models';
 import { Op } from 'sequelize';
 
 export class Register {

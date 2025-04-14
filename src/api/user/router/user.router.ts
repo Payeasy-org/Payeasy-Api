@@ -1,69 +1,63 @@
 import { ControlBuilder } from '@/core';
 import { Router } from 'express';
-import { farmService } from '../services';
 import {
-    createBulkFarmSchema,
-    createFarmSchema,
-    extensionAgentApproveSchema,
-    extensionAgentLoginSchema,
-    extensionAgentRegisterSchema,
-    farmQuerySchema,
-    findFarmByIdSchema,
-    updateFarmSchema,
+    forgotPassword,
+    login,
+    logout,
+    refreshToken,
+    register,
+    resetPassword,
+} from '../services';
+import {
+    forgotPasswordSchema,
+    loginSchema,
+    refreshTokenSchema,
+    resetPasswordSchema,
+    signUpSchema,
 } from './schema';
 
 export const userRouter = Router();
 
-/***********  FARMERS  ***********/
 userRouter
-    .route('/farmer/farm')
-    .get(
+    .post(
+        '/login',
         ControlBuilder.builder()
-            .setHandler(farmService.findAllForFarmer)
+            .setValidator(loginSchema)
+            .setHandler(login.handle)
             .handle(),
     )
 
     .post(
+        '/register',
         ControlBuilder.builder()
-            .isPrivate()
-            .setValidator(createFarmSchema)
-            .setHandler(farmService.create)
+            .setValidator(signUpSchema)
+            .setHandler(register.handleUser)
             .handle(),
     )
 
-    .patch(
+    .post(
+        '/forgot-password',
         ControlBuilder.builder()
-            .isPrivate()
-            .setValidator(updateFarmSchema)
-            .setHandler(farmService.update)
+            .setHandler(forgotPassword.handle)
+            .setValidator(forgotPasswordSchema)
             .handle(),
     )
 
-    .delete(
+    .post(
+        '/reset-password',
+        ControlBuilder.builder()
+            .setHandler(resetPassword.handle)
+            .setValidator(resetPasswordSchema)
+            .handle(),
+    )
+
+    .post(
+        '/refresh-token',
         ControlBuilder.builder()
             .isPrivate()
-            .setValidator(farmQuerySchema)
-            .setHandler(farmService.delete)
+            .setHandler(refreshToken.handle)
+            .setValidator(refreshTokenSchema)
             .handle(),
-    );
+    )
 
-userRouter.post(
-    '/farmer/farm/:id',
-
-    ControlBuilder.builder()
-        .isPrivate()
-        .setValidator(findFarmByIdSchema)
-        .setHandler(farmService.findById)
-        .handle(),
-);
-
-userRouter.post(
-    '/farmer/farm/bulk',
-
-    ControlBuilder.builder()
-        .isPrivate()
-        .only('FARMER')
-        .setValidator(createBulkFarmSchema)
-        .setHandler(farmService.bulkCreate)
-        .handle(),
-);
+    .get('/logout', logout.handle);

@@ -99,7 +99,7 @@
     },
     "_moduleAliases": {
         "@": "./build",
-        "@auth": "./build/api/auth"
+        "@user": "./build/api/user"
     },
     "author": "Payeasy",
     "license": "ISC"

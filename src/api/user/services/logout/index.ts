@@ -1,7 +1,7 @@
 import { cache } from '@/app/app-cache';
 import { config, HttpStatus, logger, UnAuthorizedError } from '@/core';
 import type { NextFunction, Request, Response } from 'express';
-import { authUtil } from '../../utils';
+import { authUtil } from '@user/utils';
 
 export class Logout {
     constructor() {}
