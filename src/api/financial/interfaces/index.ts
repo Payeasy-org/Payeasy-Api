@@ -1,1 +1,1 @@
-export * from './controller.payload';
+// Export all controller and module types from here
