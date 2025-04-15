@@ -17,6 +17,11 @@ export interface IHandlerFunctionResponse<T> {
 }
 
 // Authorization
-export const user_roles = ['FARMER', 'ADMIN', 'USER', 'DEVELOPER'] as const;
+export const user_roles = [] as const;
 
-export type AuthorizationRoles = typeof user_roles[number];
+export type AuthorizationRoles = (typeof user_roles)[number];
+
+export type PaginationPayload = {
+    page: number;
+    limit: number;
+};
