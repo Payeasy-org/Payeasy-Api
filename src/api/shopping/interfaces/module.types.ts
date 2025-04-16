@@ -1,1 +1,7 @@
-// Export all module types from here
+type Product = {
+    sku: string;
+    name: string;
+    price: number;
+};
+
+export { Product };

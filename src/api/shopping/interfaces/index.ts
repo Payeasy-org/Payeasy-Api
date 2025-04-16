@@ -1,1 +1,1 @@
-// Export all controller and module types from here
+export * from './module.types';
