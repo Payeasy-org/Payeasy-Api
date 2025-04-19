@@ -14,7 +14,8 @@
         "paths": {
             "@/*": ["*"],
             "@user/*": ["./api/user/*"],
-            "@store/*": ["./api/store/*"]
+            "@store/*": ["./api/store/*"],
+            "@inventory-integration/*": ["./api/inventory-integration/*"]
         }
     },
     "include": ["src"]

@@ -2,7 +2,8 @@ import { sequelize } from '@/core';
 import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model, UUIDV4 } from 'sequelize';
 
 export class Location extends Model<InferAttributes<Location>, InferCreationAttributes<Location>> {
-    declare id: CreationOptional<string>;
+    declare id: CreationOptional<number>;
+    declare guid: CreationOptional<string>;
     declare name: string;
     declare latitude: number;
     declare longitude: number;
@@ -11,9 +12,16 @@ export class Location extends Model<InferAttributes<Location>, InferCreationAttr
 Location.init(
     {
         id: {
-            type: DataTypes.UUID,
+            type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
+            autoIncrement: true,
+        },
+
+        guid: {
+            type: DataTypes.UUID,
+            allowNull: false,
+            unique: true,
             defaultValue: UUIDV4,
         },
 

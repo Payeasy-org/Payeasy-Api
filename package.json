@@ -100,7 +100,9 @@
     "_moduleAliases": {
         "@": "./build",
         "@user": "./build/api/user",
-        "@store": "./build/api/store"
+        "@store": "./build/api/store",
+        "@inventory-integration": "./build/api/inventory-integration"
+        
     },
     "author": "Payeasy",
     "license": "ISC"

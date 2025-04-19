@@ -1,6 +1,6 @@
 import { ControllerArgs, HttpStatus, logger } from '@/core';
-import { Store } from '@store/models';
 import { GetStoresPayload } from '@store/interfaces';
+import { Store } from '@store/models';
 
 export class GetAllStores {
     constructor(private readonly dbStore: typeof Store) {}
