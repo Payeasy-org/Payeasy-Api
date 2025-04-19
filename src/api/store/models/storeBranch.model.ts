@@ -4,7 +4,8 @@ import { Store } from './store.model';
 import { Location } from './location.model';
 
 export class StoreBranch extends Model<InferAttributes<StoreBranch>, InferCreationAttributes<StoreBranch>> {
-    declare id: CreationOptional<string>;
+    declare id: CreationOptional<number>;
+    declare guid: CreationOptional<string>;
     declare name: string;
     declare storeId: ForeignKey<Store['id']>;
     declare locationId: ForeignKey<Location['id']>;
@@ -17,9 +18,16 @@ export class StoreBranch extends Model<InferAttributes<StoreBranch>, InferCreati
 StoreBranch.init(
     {
         id: {
-            type: DataTypes.UUID,
+            type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
+            autoIncrement: true,
+        },
+
+        guid: {
+            type: DataTypes.UUID,
+            allowNull: false,
+            unique: true,
             defaultValue: UUIDV4,
         },
 
@@ -29,7 +37,7 @@ StoreBranch.init(
         },
 
         storeId: {
-            type: DataTypes.UUID,
+            type: DataTypes.INTEGER,
             allowNull: false,
 
             references: {
@@ -38,7 +46,7 @@ StoreBranch.init(
             },
         },
         locationId: {
-            type: DataTypes.UUID,
+            type: DataTypes.INTEGER,
             allowNull: false,
 
             references: {
