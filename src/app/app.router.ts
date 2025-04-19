@@ -1,3 +1,5 @@
+import { storeRouter } from '@/api/store';
+import { storeBaseRouter } from '@/api/store/router';
 import { userRouter } from '@/api/user';
 import { HttpStatus } from '@/core';
 import { Router } from 'express';
@@ -10,9 +12,9 @@ export const appRouter = Router();
 
 // appRouter.use("/shopping", shoppingRouter) // DONE
 
-// appRouter.use("/payment", paymentRouter)
 
 appRouter.use('/user', userRouter);
+appRouter.use('/store', storeBaseRouter);
 
 // appRouter.use("/notifications", notificationRouter) // DONE
 

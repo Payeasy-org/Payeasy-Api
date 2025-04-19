@@ -7,7 +7,6 @@ export class Store extends Model<InferAttributes<Store>, InferCreationAttributes
     declare guid: CreationOptional<string>;
     declare name: string;
     declare description: CreationOptional<string>;
-    declare authKey: CreationOptional<string>;
     declare dashboardUrl: CreationOptional<string>;
     declare inventoryUsed: Providers;
     declare inventoryConfig: CreationOptional<Record<string, any>>;
@@ -35,10 +34,6 @@ Store.init(
             unique: true,
         },
         description: {
-            type: DataTypes.STRING,
-            allowNull: true,
-        },
-        authKey: {
             type: DataTypes.STRING,
             allowNull: true,
         },

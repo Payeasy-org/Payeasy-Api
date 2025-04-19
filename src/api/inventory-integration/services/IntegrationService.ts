@@ -1,10 +1,5 @@
 import { Product } from '@/api/shopping/interfaces';
-
-export enum Providers {
-    Retailr = 'RETAILR',
-}
-
-export const inventoryProviders = Object.values(Providers) as string[];
+import { Providers } from '../interfaces';
 
 /**
  * Base abstract class for all inventory integration services.

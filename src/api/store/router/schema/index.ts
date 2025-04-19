@@ -1,14 +1,19 @@
+import { inventoryProviders } from '@/api/inventory-integration/interfaces';
 import Joi from 'joi';
 
 const paginationSchema = Joi.object({
     page: Joi.number().integer().min(1).default(1),
     limit: Joi.number().integer().min(1).default(10),
-}).unknown(false); 
+}).unknown(false);
 
 const createStoreSchema = {
     inputSchema: Joi.object().keys({
         name: Joi.string().required(),
         description: Joi.string().required(),
+        inventoryProvider: Joi.string()
+            .valid(...inventoryProviders)
+            .required(),
+        config: Joi.object().pattern(Joi.string(), Joi.any()).required(),
     }),
 };
 

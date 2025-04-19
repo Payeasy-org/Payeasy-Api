@@ -47,6 +47,9 @@ const envSchema = Joi.object()
         PAYSTACK_SECRET_KEY: Joi.string().required(),
 
         FRONTEND_LIVE_ORIGIN: Joi.string().required(),
+
+        RETAILR_EMAIL: Joi.string().required(),
+        RETAILR_PASSWORD: Joi.string().required(),
     })
     .unknown();
 
@@ -115,5 +118,10 @@ export const config = Object.freeze({
         secretKey: validatedEnvVars.PAYSTACK_SECRET_KEY,
     },
 
-
+    inventories: {
+        retailr: {
+            email: validatedEnvVars.RETAILR_EMAIL,
+            password: validatedEnvVars.RETAILR_PASSWORD,
+        },
+    },
 });
