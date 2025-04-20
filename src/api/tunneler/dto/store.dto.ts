@@ -1,14 +1,15 @@
 // DTO for store branch lookup (from QR code scanning)
 export interface GetStoreBranchDTO {
-    storeBranchId: string;
+    storeBranchGuid: string;
 }
 
 // Response interface for store branch details
 export interface StoreBranchResponse {
-    id: string;
+    id: number;
     branchName: string;
-    storeName: string;
+    storeId: number;
     locationName: string;
+    inventoryUsed: string;
     latitude: number;
     longitude: number;
     createdAt: string;

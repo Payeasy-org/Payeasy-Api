@@ -1,5 +1,5 @@
-import { checkoutRouter, searchRetailrRouter, searchStoreRouter,cartRouter } from '@/api/tunneler';
 
+import { tunnelerRouter } from '@/api/tunneler';
 
 import { storeRouter } from '@/api/store';
 import { storeBaseRouter } from '@/api/store/router';
@@ -16,10 +16,15 @@ export const appRouter = Router();
 // appRouter.use("/shopping", shoppingRouter) // DONE
 
 // appRouter.use("/payment", paymentRouter)
-appRouter.use('/shopping', checkoutRouter)
-appRouter.use('/product', searchRetailrRouter)
-appRouter.use('/tunneler', searchStoreRouter)
-appRouter.use('/cart',cartRouter)
+
+//tunneler
+
+
+//get store
+appRouter.use('/tunneler', tunnelerRouter);
+
+
+
 
 appRouter.use('/user', userRouter);
 appRouter.use('/store', storeBaseRouter);

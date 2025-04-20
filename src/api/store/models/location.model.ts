@@ -7,6 +7,7 @@ export class Location extends Model<InferAttributes<Location>, InferCreationAttr
     declare name: string;
     declare latitude: number;
     declare longitude: number;
+
 }
 
 Location.init(
@@ -29,6 +30,7 @@ Location.init(
             type: DataTypes.STRING,
             allowNull: false,
         },
+
 
         latitude: {
             type: DataTypes.DECIMAL(10, 8),
