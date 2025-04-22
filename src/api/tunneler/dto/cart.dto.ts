@@ -5,6 +5,7 @@ export interface AddCartItemDTO {
   quantity: number;
   name?: string;  
   price?: number;  
+  imageUrl?: string;
 }
 
 // DTO for updating a cart item's quantity.

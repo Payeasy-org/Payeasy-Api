@@ -1,29 +1,8 @@
 import { Request, Response } from 'express';
-import { getInventoryService } from '../search-products';
-import { GetProductDTO, branchProductResponse } from '../dto/product.dto';
+import { getInventoryService } from './seach-product-by-inventory';
+import { GetProductDTO, branchProductResponse } from '../../interfaces/product.dto';
 import { BadRequestError } from '@/core';
 
-
-
-
-
-//   const { inventoryProvider,productId } = req.body as GetProductDTO;
-
-//   if (!productId|| !inventoryProvider) {
-//     res.status(400).json({ message: 'Missing search term' });
-//     return;
-//   }
- 
-//   try {
-//     const { data } = getInventoryService;
-
-//     const products: branchProductResponse[] = data.data;
-//     res.status(200).json(products);
-//   } catch (error) {
-//     console.error('Error fetching products from Retailr:', error);
-//     res.status(500).json({ message: 'Failed to fetch product from Retailr' });
-//   }
-// };
 
 export const searchSupermartProduct = async (req: Request, res: Response): Promise<void> => {
     const { productId, inventoryProvider } = req.body as GetProductDTO;
@@ -35,14 +14,12 @@ export const searchSupermartProduct = async (req: Request, res: Response): Promi
     try {
         const service = await getInventoryService(inventoryProvider);
 
-        const rawResponse = await service.getProduct({ product_id: productId });
-
-        // Check if the response is valid
+        const rawResponse = await service.getProduct(req,{ product_id: productId });
         if (!rawResponse || rawResponse.status !== 'success' || !rawResponse.data) {
             res.status(404).json({ message: 'Product not found' });
             return;
         }
-        console.log('rawResponse', rawResponse);
+
         const {
             id,
             variant: {
@@ -65,6 +42,7 @@ export const searchSupermartProduct = async (req: Request, res: Response): Promi
             quantity: quantity || 0,
             imageUrl: images?.[0]?.src || undefined,
             category: categories?.[0]?.name || undefined,
+            scannedAt: new Date().toISOString(),
         };
 
         res.status(200).json(formatted);

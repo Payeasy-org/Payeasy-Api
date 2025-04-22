@@ -2,14 +2,13 @@ import { Request, Response } from 'express';
 import { StoreBranch } from '@/api/store/models/storeBranch.model';
 import { Store } from '@/api/store/models/store.model';
 import { Location } from '@/api/store/models/location.model';
-import { GetStoreBranchDTO, StoreBranchResponse } from '../dto/store.dto';
+import { GetStoreBranchDTO, StoreBranchResponse } from '../../interfaces/store.dto';
 
 export const searchStore = async (req: Request, res: Response): Promise<void> => {
     const { storeBranchGuid } = req.params as unknown as GetStoreBranchDTO;
     console.log(`Store Branch GUID: ${storeBranchGuid}`);
 
     try {
-
         const storeBranch = await StoreBranch.findOne({
             where: { guid: storeBranchGuid },
         });
@@ -39,7 +38,7 @@ export const searchStore = async (req: Request, res: Response): Promise<void> =>
             locationName: location.name,
             latitude: Number(location.latitude),
             longitude: Number(location.longitude),
-            inventoryUsed:store.inventoryUsed,
+            inventoryUsed: store.inventoryUsed,
             createdAt: (storeBranch as any).createdAt?.toISOString(),
             updatedAt: (storeBranch as any).updatedAt?.toISOString(),
         };

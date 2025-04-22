@@ -1,13 +1,20 @@
 'use strict';
 
-/** @type {import('sequelize-cli').Migration} */
-// migrations/XXXX-add-sessionid-to-users.js
 module.exports = {
-  up: async (qi, Sequelize) => {
-    await qi.addColumn('users', 'sessionId', { type: Sequelize.STRING, allowNull: true });
+  up: async (queryInterface, Sequelize) => {
+    const tableDefinition = await queryInterface.describeTable('user');
+    if (!tableDefinition.sessionId) {
+      await queryInterface.addColumn('user', 'sessionId', {
+        type: Sequelize.STRING(255),
+        allowNull: true,
+      });
+    }
   },
-  down: async (qi) => {
-    await qi.removeColumn('users', 'sessionId');
-  }
-};
 
+  down: async (queryInterface, Sequelize) => {
+    const tableDefinition = await queryInterface.describeTable('user');
+    if (tableDefinition.sessionId) {
+      await queryInterface.removeColumn('user', 'sessionId');
+    }
+  },
+};
