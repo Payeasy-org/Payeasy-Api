@@ -9,6 +9,7 @@ export class User extends Model<InferAttributes<User>, InferCreationAttributes<U
     declare password: string | null;
     declare providerId: CreationOptional<string>;
     declare provider: string;
+    declare sessionId: CreationOptional<string>;
 }
 
 User.init(
@@ -36,6 +37,11 @@ User.init(
         },
         password: {
             type: DataTypes.STRING,
+            allowNull: true,
+        },
+        sessionId: {
+            type: DataTypes.STRING,
+            defaultValue: null,
             allowNull: true,
         },
         providerId: {

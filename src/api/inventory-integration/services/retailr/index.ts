@@ -6,7 +6,7 @@ import { IntegrationService, Providers } from '../../interfaces';
 import { RetailrBranchItemResponse, RetailrLoginResponse } from './types/apiResponse';
 
 export class RetailrIntegrationService extends IntegrationService {
-    private storeId!: string;
+    private storeId!: number;
     private branchId!: string;
     private payeasyEmail: string = config.inventories.retailr.email;
     private payeasyPassword: string = config.inventories.retailr.password;
