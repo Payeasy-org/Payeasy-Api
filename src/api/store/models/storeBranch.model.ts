@@ -12,7 +12,6 @@ export class StoreBranch extends Model<InferAttributes<StoreBranch>, InferCreati
     declare contactEmail: CreationOptional<string>;
     declare contactPhoneNumber: CreationOptional<string>;
     declare isHeadquarter: CreationOptional<boolean>;
-     
 }
 
 StoreBranch.init(

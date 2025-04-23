@@ -1,4 +1,4 @@
-import { RetailrInventoryItem, RetailrUser, RetailrVariant } from './interfaces';
+import { RetailrInventoryItem, RetailrUser } from './interfaces';
 
 interface BaseApiResponse {
     status: string;
@@ -22,7 +22,4 @@ export interface RetailrBranchItemResponse extends BaseApiResponse {
         previous: string | null;
         results: RetailrInventoryItem[];
     };
-}
-export interface ResponseDTO extends BaseApiResponse {
-    data: RetailrInventoryItem; // The item is nested under 'data'
 }

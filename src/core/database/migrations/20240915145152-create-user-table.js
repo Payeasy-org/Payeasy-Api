@@ -36,7 +36,6 @@ module.exports = {
                 defaultValue: null,
                 allowNull: true,
             },
-
             isVerified: {
                 type: Sequelize.BOOLEAN,
                 defaultValue: false,
@@ -46,7 +45,6 @@ module.exports = {
                 type: Sequelize.BOOLEAN,
                 defaultValue: true,
             },
-            
 
             roleId: {
                 type: Sequelize.UUID,

@@ -27,7 +27,7 @@ storeRouter
             .handle(),
     )
     .get(
-        '/:id',
+        ':id',
         ControlBuilder.builder()
             .setValidator(storeByIdSchema)
             .setHandler(getStoreById.handle)
