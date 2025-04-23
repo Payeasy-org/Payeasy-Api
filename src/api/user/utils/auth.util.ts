@@ -21,13 +21,10 @@ export class AuthUtil {
 
     async _extractTokenDetails(encryptedToken: string, secret: string) {
         const decryptedToken = this.decrypt(encryptedToken);
-        
 
         const tokenDetails = this._verifyToken(decryptedToken, secret);
 
         const tokenPayload = tokenDetails as ITokenSignedPayload;
-
-      
 
         return tokenPayload;
     }
@@ -68,7 +65,6 @@ export class AuthUtil {
     };
 
     private decrypt(encryptedString: string): string {
-    
         return CryptoJS.AES.decrypt(encryptedString, this.encryptorSecretKey).toString(CryptoJS.enc.Utf8);
     }
 }

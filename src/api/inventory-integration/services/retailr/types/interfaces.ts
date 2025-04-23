@@ -36,10 +36,7 @@ export interface RetailrLocation {
     latitude: string;
     longitude: string;
 }
-export interface RetailrImage {
-    src: string;
-    alt: string;
-}
+
 export interface RetailrInventoryItem {
     id: number;
     variant: RetailrVariant;
@@ -57,7 +54,7 @@ export interface RetailrInventoryItem {
     expiration_date: string | null;
     description: string | null;
     selling_price: number;
-    images: RetailrImage[];
+    images: string[];
 }
 
 export interface RetailrVariant {
