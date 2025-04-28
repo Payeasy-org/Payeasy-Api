@@ -7,7 +7,6 @@ import { storeBaseRouter } from '@/api/store/router';
 import { userRouter } from '@/api/user';
 import { HttpStatus } from '@/core';
 import { Router } from 'express';
-import { tunnelerRouter } from '@/api/tunneler/routes/tunneler.routes';
 import { cartPaymentRouter } from '@/api/financial/router/payment.router';
 import { receiptRouter } from '@/api/financial/router/receipt.router';
 import { storePaymentRouter } from '@/api/financial/router/store.router';
@@ -30,7 +29,7 @@ appRouter.use("/payment",receiptRouter)
 
 
 //get store
-appRouter.use('/tunneler', tunnelerRouter);
+ 
 
 
 
